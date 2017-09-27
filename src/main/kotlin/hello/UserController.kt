@@ -1,10 +1,12 @@
 package hello
 
 import hello.model.User
+import hello.model.UserDetails
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.ModelMap
+import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
@@ -34,15 +36,14 @@ class UserController {
     @GetMapping("/register")
     fun register(model : ModelMap): String {
         val user = User()
+        user.userDetails = UserDetails()
         model.addAttribute("user", user)
         return "register.html"
     }
 
     @PostMapping("/join")
-    fun join(@ModelAttribute user: User): String {
-        log.info(user.toString())
-        log.info(user.toString())
-        log.info(user.toString())
+    fun join(@ModelAttribute user: User, result : BindingResult): String {
+        log.info(user.userDetails.toString())
         return "register.html"
     }
 }

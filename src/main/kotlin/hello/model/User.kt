@@ -18,7 +18,7 @@ class User(
         val active : Boolean = false,
         @NotNull
         @OneToOne
-        val userDetails: UserDetails = UserDetails(),
+        var userDetails: UserDetails = UserDetails(),
 
         @ManyToMany
         @JoinTable(name = "USER_ROLE",
