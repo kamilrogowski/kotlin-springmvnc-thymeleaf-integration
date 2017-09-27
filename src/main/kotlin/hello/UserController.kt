@@ -37,4 +37,12 @@ class UserController {
         model.addAttribute("user", user)
         return "register.html"
     }
+
+    @PostMapping("/join")
+    fun join(@ModelAttribute user: User): String {
+        log.info(user.toString())
+        log.info(user.toString())
+        log.info(user.toString())
+        return "register.html"
+    }
 }

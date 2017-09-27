@@ -25,4 +25,8 @@ class User(
                 joinColumns = arrayOf(JoinColumn(name = "USER_ID", updatable = false, nullable = false)),
                 inverseJoinColumns = arrayOf(JoinColumn(name = "ROLE_ID",  nullable = false, updatable = false)))
         val roles : Set<Role> = setOf()
-)
+) {
+        override fun toString(): String {
+                return "User(id=$id, login='$login', password='$password', email='$email', active=$active, userDetails=$userDetails, roles=$roles)"
+        }
+}

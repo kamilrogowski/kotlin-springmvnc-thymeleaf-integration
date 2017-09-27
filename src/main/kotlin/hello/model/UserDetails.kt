@@ -17,5 +17,8 @@ class UserDetails(
         val surname: String = "",
         val age : Int = -1,
         val gender : Char = ' ',
-        val phone: String = ""
-)
+        val phone: String = "") {
+        override fun toString(): String {
+                return "UserDetails(id=$id, name='$name', surname='$surname', age=$age, gender=$gender, phone='$phone')"
+        }
+}

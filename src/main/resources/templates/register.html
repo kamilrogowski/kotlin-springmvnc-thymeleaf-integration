@@ -13,55 +13,66 @@
 
 <body>
 
-<!--/* Fragment widoczny dla niezalogowanego użytkownika: */-->
-    <div class="row">
-        <div class="col-lg-4 text-right">
-            <h1 th:text="#{register.title}"></h1>
-            <!--<p class="lead" th:text="#{login.prompt}"></p>-->
-            <!--<p th:if="${loginError}" th:text="#{login.error}"></p>-->
+
+
+<div class="container-fluid " style="font-size: 16px;padding: 100px">
+
+    <form method="post" class="form-horizontal" th:attr="action=@{/join}" th:object="${user}" >
+    <div class="col-md-6">
+        <div class="row form-group">
+            <div class="form-group col-lg-2">
+               Login:
+            </div>
+            <div class="form-group col-lg-4" style="padding-left: 50px">
+                <input type="text" id="login" name="login" class="form-control" th:field="*{login}" />
+            </div>
         </div>
-        <!--/* Panel logowania: */-->
-            <div class="container">
-                    <form method="post" class="form-horizontal" th:attr="action=@{/join}" th:object="${user}" >
-                        <!--/* Login: */-->
-                        <div class="form-group">
-                            <div class="row">
-                            <div class="col-lg-2">
-                                <div class="col-lg-1">
-                                Login:
-                                <input type="text" id="login" class="form-control" name="login"
-                                       th:attr="placeholder=#{login.login_placeholder}"  th:field="*{login}" />
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-
-                        <!--/* Hasło: */-->
-                        <div class="form-group">
-                            <div class="col">
-                                Password:
-                                <input type="password" id="password" class="form-control" name="password"
-                                       autocomplete="off"  th:field="*{password}"/>
-                            </div>
-                        </div>
-
-                        <!--/* Email: */-->
-                        <div class="form-group">
-                            <div class="col">
-                                Email:
-                                <input type="text" class="form-control" name="password"
-                                       autocomplete="off" th:field="*{email}"/>
-                            </div>
-                        </div>
-
-                        <!--/* Button submitujący login: */-->
-                        <div class="form-group">
-                            <button class="btn btn-lg btn-primary" type="submit" th:text="#{button.register}"></button>
-                        </div>
-                     </form>
+        <div class="row form-group">
+            <div class="form-group col-lg-2">
+                Password:
             </div>
+            <div class="form-group col-lg-4" style="padding-left: 50px">
+                <input type="password" id="password" class="form-control" name="password"
+                       th:field="*{password}"/>
             </div>
+        </div>
+        <div class="row form-group">
+            <div class="form-group col-lg-2">
+                Confirm password:
+            </div>
+            <div class="form-group col-lg-4" style="padding-left: 50px">
+                <input type="password" id="passwordConfirmed" class="form-control"
+                       th:field="*{password}"/>
+            </div>
+        </div>
 
+        <div class="row form-group">
+            <div class="form-group col-lg-2">
+                Email:
+            </div>
+            <div class="form-group col-lg-4" style="padding-left: 50px">
+                <input type="text" id="email" class="form-control"
+                       th:field="*{email}"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="form-group col-lg-2">
+                321312:
+            </div>
+            <div class="form-group col-lg-4"style="padding-left: 50px">
+                <input type="text" id="userName" name="login"  class="form-control" th:field="*{userDetails.name}" />
+            </div>
+        </div>
+    </div>
+        <!--/* Button submitujący login: */-->
+        <div class="form-group">
+            <button class="btn btn-lg btn-primary" type="submit" th:text="#{button.register}"></button>
+
+        </div>
+    </form>
+</div>
 
 <!--&lt;!&ndash;/* Fragment widoczny dla zalogowanego użytkownika: */&ndash;&gt;-->
 <!--<div id="page-wrapper" th:if="${#authorization.expression('isAuthenticated()')}">-->
