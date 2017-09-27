@@ -1,0 +1,164 @@
+.page-container {
+     margin-bottom: 40px;
+}
+
+.comarch-header {
+    padding:8px;
+    background-color: #FFFFFF;
+}
+
+.navbar-collapse  {
+    background-color: #004E75;
+}
+
+.navbar-header {
+
+    background-color: #004E75;
+}
+
+.navbar-toggle {
+      border-color: #333;
+}
+
+.navbar-toggle .icon-bar {
+      display: block;
+      width: 22px;
+      height: 2px;
+      border-radius: 1px;
+    background-color: #FFF;
+}
+
+.navbar-nav > li > a {
+    color: #FFF;
+}
+
+.navbar-nav > li > form > a {
+    color: #FFF;
+}
+
+.navbar-nav > li > a:hover {
+    background-color: #000;
+}
+
+.navbar-bottom {
+    background-color: #004E75;
+    left: 0px;
+    height:20px;
+    color: #FFF;
+    position: fixed;
+    bottom: 0px ;
+    width: 100%;
+}
+
+table.tablesorter thead tr .header {
+    background-image: url(../img/bg.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+table.tablesorter thead tr .headerSortUp {
+    background-image: url(../img/asc.gif);
+}
+
+table.tablesorter thead tr .headerSortDown {
+    background-image: url(../img/desc.gif);
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.imageButton {
+    font-size: 40px;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.imageButtonMedium {
+    font-size: 30px;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.imageButtonNormal {
+    font-size: 25px;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.imageButtonSmall {
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.comarch-textarea {
+    width:100%;
+    resize:none;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+  cursor: default;
+}
+
+.dl-horizontal dt {
+    width: 170px;
+    text-align: right;
+    overflow: hidden;
+    text-overflow:clip;
+}
+
+.dl-horizontal dd {
+    text-align: left;
+    overflow: hidden;
+}
+
+.control-label {
+    font-weight:normal;
+}
+
+.centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.btn-default {
+    background-color: #F3F3F3;
+    font-weight: 500;
+}
+
+.modal-dialog {
+    position: absolute;
+    left: 50%;
+    margin-left: -312px;
+    height: 500px;
+    top: 50%;
+    margin-top: -250px;
+}
+
+.control-label {
+    font-weight: normal;
+}

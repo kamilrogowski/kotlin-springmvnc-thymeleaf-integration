@@ -1,0 +1,92 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="#{login.title}"></title>
+    <link rel="icon" th:href="@{/img/favicon.png}" />
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/list.css}" />
+</head>
+
+<body>
+<!--<nav class="navbar" th:attr="role=navigation">-->
+    <!--<div class="navbar-header">-->
+        <!--<button type="button" class="navbar-toggle" th:attr="data-toggle=collapse, data-target=bar">-->
+            <!--<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>-->
+        <!--</button>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash;<div id="bar" class="collapse navbar-collapse">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
+            <!--&lt;!&ndash;<ul class="nav navbar-nav navbar-right">&ndash;&gt;-->
+                <!--&lt;!&ndash;<li th:if="${#authorization.expression('isAuthenticated()')}"><a&ndash;&gt;-->
+                        <!--&lt;!&ndash;sec:authentication="principal.UserDetails.identity" href="manage_account.html"> </a></li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<li th:unless="${#authorization.expression('isAuthenticated()')}"><a&ndash;&gt;-->
+                        <!--&lt;!&ndash;th:text="#{login.not_logged_in}"></a></li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<li th:if="${#authorization.expression('isAuthenticated()')}"><a href="/login"&ndash;&gt;-->
+                                                                                 <!--&lt;!&ndash;th:href="j_spring_security_logout" th:text="#{navbar.logout_button}"> </a></li>&ndash;&gt;-->
+            <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</nav>-->
+
+<!--/* Fragment widoczny dla niezalogowanego użytkownika: */-->
+<div>
+    <div class="row">
+        <div class="col-lg-12 text-center v-center">
+            <h1 th:text="#{login.title}"></h1>
+        </div>
+        <!--/* Panel logowania: */-->
+        <div class="panel-body">
+            <div class="row" id="login-row">
+                <div class="col-lg-12 text-center v-center">
+                    <form method="post" class="form-horizontal" th:attr="action=@{/login}" th:object="${user}" >
+                        <!--/* Login: */-->
+                        <div class="form-group">
+                            <div class="col">
+                                <input type="text" id="login" class="form-control" name="login"
+                                       th:attr="placeholder=#{login.login_placeholder}"  th:field="*{login}" />
+                            </div>
+                        </div>
+
+                        <!--/* Hasło: */-->
+                        <div class="form-group">
+                            <div class="col">
+                                <input type="password" id="password" class="form-control" name="password"
+                                       autocomplete="off" th:attr="placeholder=#{login.password_placeholder}"
+                                       th:field="*{password}"/>
+                            </div>
+                        </div>
+                        <!--/* Button submitujący login: */-->
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-primary" type="submit" th:text="#{login.button}"></button>
+
+                        </div>
+                     </form>
+                        <!--/* Zapomniałem hasła: */-->
+                     <div class="form-group">
+                          <a th:href="@{/register}" class="clickable" type="submit" th:text="#{button.register}"></a>
+                          <div class="col">
+                              <a class="clickable" th:text="#{login.passwordForgotten}" onclick="alert('Ficzer TODO')"></a>
+                           </div>
+                     </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--&lt;!&ndash;/* Fragment widoczny dla zalogowanego użytkownika: */&ndash;&gt;-->
+<!--<div id="page-wrapper" th:if="${#authorization.expression('isAuthenticated()')}">-->
+    <!--<div class="col-lg-12 text-center v-center">-->
+        <!--<h1 th:text="#{login.already_logged_in}"></h1>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div th:replace="navbar :: footer"></div>
+</body>
+</html>
