@@ -12,7 +12,10 @@ import javax.validation.constraints.NotNull
 class User(
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long = -1,
+        @Column(unique = true)
+        @NotNull
         var login: String  = "",
+        @NotNull
         var password: String = "",
         @Email
         var email : String = "",
