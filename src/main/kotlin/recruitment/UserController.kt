@@ -51,10 +51,8 @@ class UserController (private val userRepository: UserRepository) {
         user.userDetails.surname = userForm.surname
         user.userDetails.phone = userForm.phone
         user.userDetails.gender = userForm.gender
-        userRepository.save(user),
-
-
-        redirectAttributes.addFlashAttribute("success","Udało się")
-        return "register.html"
+        userRepository.save(user)
+        redirectAttributes.addFlashAttribute("success","You have been successfully registered")
+        return "redirect:/join"
     }
 }
