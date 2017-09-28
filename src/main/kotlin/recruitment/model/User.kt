@@ -1,5 +1,6 @@
-package hello.model
+package recruitment.model
 
+import org.hibernate.annotations.Cascade
 import org.hibernate.validator.constraints.Email
 import javax.persistence.*
 import javax.validation.constraints.NotNull
@@ -11,19 +12,20 @@ import javax.validation.constraints.NotNull
 class User(
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long = -1,
-        val login: String  = "",
-        val password: String = "",
+        var login: String  = "",
+        var password: String = "",
         @Email
-        val email : String = "",
-        val active : Boolean = false,
+        var email : String = "",
+        val active : Boolean = true,
         @NotNull
-        @OneToOne
+        @OneToOne(cascade = arrayOf(CascadeType.ALL))
         val userDetails: UserDetails = UserDetails(),
 
-        @ManyToMany
+        @ManyToMany(cascade = arrayOf(CascadeType.ALL))
         @JoinTable(name = "USER_ROLE",
                 joinColumns = arrayOf(JoinColumn(name = "USER_ID", updatable = false, nullable = false)),
                 inverseJoinColumns = arrayOf(JoinColumn(name = "ROLE_ID",  nullable = false, updatable = false)))
+
         val roles : Set<Role> = setOf()
 ) {
         override fun toString(): String {

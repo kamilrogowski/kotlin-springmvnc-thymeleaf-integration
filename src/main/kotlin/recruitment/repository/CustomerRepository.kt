@@ -1,6 +1,6 @@
-package hello.repository
+package recruitment.repository
 
-import hello.model.Customer
+import recruitment.model.Customer
 import org.springframework.data.repository.CrudRepository
 
 interface CustomerRepository : CrudRepository<Customer, Long> {

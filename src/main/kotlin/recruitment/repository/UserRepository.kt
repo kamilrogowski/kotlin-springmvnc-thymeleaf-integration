@@ -1,7 +1,6 @@
-package hello.repository
+package recruitment.repository
 
-import hello.model.Customer
-import hello.model.User
+import recruitment.model.User
 import org.springframework.data.repository.CrudRepository
 
 /**
