@@ -1,13 +1,11 @@
 package recruitment
 
+import org.apache.tomcat.jni.Error
 import recruitment.model.User
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Controller
 import org.springframework.ui.ModelMap
-import org.springframework.validation.BindException
-import org.springframework.validation.BindingResult
-import org.springframework.validation.Errors
-import org.springframework.validation.FieldError
+import org.springframework.validation.*
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.ModelAttribute
@@ -51,6 +49,9 @@ class UserController (private val userRepository: UserRepository) {
     @PostMapping("/join")
     fun join(@ModelAttribute("userForm") @Valid userForm: UserForm,bindingResult: BindingResult, redirectAttributes: RedirectAttributes): String {
         log.info(userForm.toString())
+        if (bindingResult.hasErrors()) {
+            return REGISTER_HOME
+        }
         val user = User()
         user.login = userForm.login
         user.password = userForm.password
@@ -60,21 +61,29 @@ class UserController (private val userRepository: UserRepository) {
         user.userDetails.surname = userForm.surname
         user.userDetails.phone = userForm.phone
         user.userDetails.gender = userForm.gender
+        var code = checkUserAvailability(userForm.email,userForm.login)
+        if(code != null) {
+            redirectAttributes.addFlashAttribute("error", ErrorsFactory.ERROR_MESSAGES[code])
+            return REGISTER_HOME
+        }
         userRepository.save(user)
         redirectAttributes.addFlashAttribute("success","You have been successfully registered")
         return REDIRECT_REGISTER
     }
 
-//    private fun checkUserAvailability(errors: BindException, email: String?, login: String?) {
-//        email?.let { email ->
-//            if (userRepository.existsByEmail(email)) {
-//                errors.addError(FieldError("", "email", "already taken"))
-//            }
-//        }
-//        login?.let { login ->
-//            if (userRepository.existsByLogin(login)) {
-//                errors.addError(FieldError("", "login", "already taken"))
-//            }
-//        }
-//    }
+    private fun checkUserAvailability(email: String?, login: String?): String? {
+        email?.let { email ->
+            if (userRepository.existsByEmail(email)) {
+                return ErrorsFactory.EMAIL_EXISTS
+            }
+        }
+        login?.let { login ->
+            if (userRepository.existsByLogin(login)) {
+                return ErrorsFactory.LOGIN_EXISTS
+            }
+        }
+        return null
+    }
+
+
 }
