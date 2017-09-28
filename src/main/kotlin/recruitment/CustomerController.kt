@@ -1,10 +1,8 @@
-package hello
+package recruitment
 
-import hello.model.Customer
-import hello.repository.CustomerRepository
+import recruitment.repository.CustomerRepository
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 
 @Controller("/")
 class CustomerController(private val repository: CustomerRepository) {

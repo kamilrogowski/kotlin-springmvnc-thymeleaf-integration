@@ -1,4 +1,4 @@
-package hello.model
+package recruitment.model
 
 import javax.persistence.*
 
