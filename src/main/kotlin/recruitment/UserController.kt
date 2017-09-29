@@ -50,7 +50,7 @@ class UserController (private val userRepository: UserRepository) {
     fun join(@ModelAttribute("userForm") @Valid userForm: UserForm,bindingResult: BindingResult, redirectAttributes: RedirectAttributes): String {
         log.info(userForm.toString())
         if (bindingResult.hasErrors()) {
-            return REGISTER_HOME
+//            return REGISTER_HOME
         }
         val user = User()
         user.login = userForm.login
@@ -61,23 +61,32 @@ class UserController (private val userRepository: UserRepository) {
         user.userDetails.surname = userForm.surname
         user.userDetails.phone = userForm.phone
         user.userDetails.gender = userForm.gender
-        var code = checkUserAvailability(userForm.email,userForm.login)
-        if(code != null) {
+
+
+        var code = checkUserAvailability(userForm)
+                code?.let {
             redirectAttributes.addFlashAttribute("error", ErrorsFactory.ERROR_MESSAGES[code])
-            return REGISTER_HOME
+            return REDIRECT_REGISTER
         }
         userRepository.save(user)
         redirectAttributes.addFlashAttribute("success","You have been successfully registered")
         return REDIRECT_REGISTER
     }
 
-    private fun checkUserAvailability(email: String?, login: String?): String? {
-        email?.let { email ->
+    private fun checkUserAvailability(userForm: UserForm): String? {
+        var passwordConfirmed = userForm.password.split(",").toHashSet()
+        if(passwordConfirmed.size > 1){
+            return ErrorsFactory.PASSWORDS_NOT_MATCH
+        }
+
+        val email: String = userForm.email
+        val login: String = userForm.login
+        email.let { email ->
             if (userRepository.existsByEmail(email)) {
                 return ErrorsFactory.EMAIL_EXISTS
             }
         }
-        login?.let { login ->
+        login.let { login ->
             if (userRepository.existsByLogin(login)) {
                 return ErrorsFactory.LOGIN_EXISTS
             }
