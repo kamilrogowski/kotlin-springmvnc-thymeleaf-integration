@@ -12,8 +12,11 @@
 </head>
 
 <body>
-
+<div class="col-lg-12 text-center v-center">
+    <h1 th:text="#{register.title}"></h1>
+</div>
 <div class="container-fluid " style="font-size: 16px;padding: 100px">
+
     <form method="post" class="form-horizontal" th:attr="action=@{/join}" th:object="${userForm}" >
         <div class="panel-body">
             <div class="col-lg-12">

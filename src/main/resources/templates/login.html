@@ -35,6 +35,13 @@
 
 <!--/* Fragment widoczny dla niezalogowanego użytkownika: */-->
 <div>
+    <div class="panel-body">
+        <div class="col-lg-12">
+            <p class="bg-danger" th:if="${error}" th:text="${error}" style="text-align:center;border-style: solid;"></p>
+            <p class="bg-success" th:if="${success}" th:text="${success}" style="text-align:center;border-style: solid;"></p>
+        </div>
+        <br>
+    </div>
     <div class="row">
         <div class="col-lg-12 text-center v-center">
             <h1 th:text="#{login.title}"></h1>
