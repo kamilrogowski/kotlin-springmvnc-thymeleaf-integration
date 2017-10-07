@@ -1,4 +1,4 @@
-package recruitment
+package recruitment.web
 
 import recruitment.repository.CustomerRepository
 import org.springframework.stereotype.Controller

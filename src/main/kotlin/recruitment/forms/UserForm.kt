@@ -31,6 +31,7 @@ data class UserForm(
         val surname: String = "",
         val age : Int = 0,
         val gender : Char = ' ',
-        val phone: String = "")
+        val phone: String = "",
+        val role: Role = Role())
 
 
