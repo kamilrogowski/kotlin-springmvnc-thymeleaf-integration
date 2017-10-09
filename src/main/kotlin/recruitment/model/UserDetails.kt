@@ -10,9 +10,9 @@ import javax.validation.constraints.NotNull
  * Created by Kamil on 9/22/2017.
  */
 @Entity
-class UserDetails(
+open class UserDetails(
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long = -1,
+        var id: Long = -1,
         @NotNull
         var name: String  = "",
         @NotNull

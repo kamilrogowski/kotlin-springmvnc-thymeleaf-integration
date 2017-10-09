@@ -1,24 +1,31 @@
 package recruitment.model
 
+import org.hibernate.validator.constraints.NotEmpty
 import org.springframework.format.annotation.DateTimeFormat
-import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.*
 
 import javax.persistence.*
+import javax.validation.constraints.Size
 
 
 @Entity
-data class Advertisement(
+open class Advertisement(
 
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = -1,
-        val title: String = "",
-        val description: String = "",
+        @get:NotEmpty
+        @get:Size(min=4, max=30)
+        var title: String = "",
+        @get:NotEmpty
+        @get:Size(min=50, max=1000)
+        var description: String = "",
         @DateTimeFormat(pattern = "yyyy-MM-dd")
-        val startDate: LocalDateTime = LocalDateTime.now(),
+        var startDate: Date? = Date(),
         @DateTimeFormat(pattern = "yyyy-MM-dd")
-        val endDate: LocalDateTime = LocalDateTime.now()
-//        @NotNull
-//        @OneToOne(cascade = arrayOf(CascadeType.ALL))
-//        val companyOwner: Company = Company()
-)
+        var endDate: Date? = Date(),
+        @OneToOne(cascade = arrayOf(CascadeType.ALL))
+        var company: Company = Company()  )
+
+
+

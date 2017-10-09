@@ -1,18 +1,25 @@
 package recruitment.model
 
+import org.hibernate.validator.constraints.NotEmpty
 import javax.persistence.*
 import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 
 @Entity
-data class Company(
+open class Company(
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = -1,
-        val companyName: String = "",
-        val streetName: String = "",
-        val streetNumber: String = "",
-        @NotNull
-        @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        val contactPerson: User = User(),
-        val city: String = "",
-        val email: String = ""
+        @get:NotEmpty
+        @get:Size(min=1, max=150)
+        var companyName: String = "",
+        @get:Size(min=1, max=150)
+        var city: String = "",
+        @get:Size(min=1, max=150)
+        var email: String = "",
+        @get:Size(min=1, max=150)
+        var name: String  = "",
+        @get:Size(min=1, max=150)
+        var surname: String = ""
+
+
 )

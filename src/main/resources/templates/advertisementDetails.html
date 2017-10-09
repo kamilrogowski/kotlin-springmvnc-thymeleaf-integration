@@ -17,7 +17,7 @@
 </div>
 <div class="container-fluid " style="font-size: 16px;padding: 100px">
     <hr class="style1">
-    <form method="post" class="form-horizontal" th:attr="action=@{/advertisement/add}" th:object="${advertisement}" >
+    <form method="post" class="form-horizontal" th:attr="action=@{/advertisement/confirm}" th:object="${advertisement}" >
         <div class="panel-body">
             <div class="col-lg-12">
                 <p class="bg-danger" th:if="${error}" th:text="${error}" style="text-align:center;border-style: solid;"></p>
@@ -32,27 +32,23 @@
                    Job title:
                 </div>
                 <div class="form-group col-lg-4" style="padding-left: 50px">
-                    <input type="text" id="title" name="title" class="form-control" th:field="*{title}" />
+                    <p th:value="${title}"></p>
                 </div>
-                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
             </div>
             <div class="row form-group">
                 <div class="form-group col-lg-2">
                     Description:
                 </div>
                 <div class="form-group col-lg-4" style="padding-left: 50px">
-                    <textarea rows="6" cols="50" id="description" class="form-control" name="description"
-                               th:field="*{description}" style="margin: 0px -489px 0px 0px; height: 333px; width: 808px;"></textarea>
+                    <p th:text="${description}"></p>
                 </div>
-                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
             </div>
             <div class="row form-group">
                 <div class="form-group col-lg-2">
                     Start Date:
                 </div>
                 <div class="form-group col-lg-4" style="padding-left: 50px">
-                    <input type="date" id="startDate" class="form-control"
-                           th:field="*{startDate}"/>
+                    <p th:text="${startDate}"></p>
                 </div>
             </div>
 
@@ -61,8 +57,7 @@
                     End date:
                 </div>
                 <div class="form-group col-lg-4" style="padding-left: 50px">
-                    <input type="date" id="endDate" class="form-control"
-                           th:field="*{endDate}"/>
+                    <p th:text="${endDate}"></p>
                 </div>
                 <!--<p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>-->
             </div>
@@ -74,8 +69,7 @@
                     Company name:
                 </div>
                 <div class="form-group col-lg-4" style="padding-left: 50px">
-                    <input type="text" id="companyName" class="form-control"
-                           th:field="*{company.companyName}"/>
+                    <!--<p th:text="${company.companyName}"></p>-->
                 </div>
                 <!--<p th:if="${#fields.hasErrors('{company.companyName')}" th:errors="*{{company.companyName}"></p>-->
             </div>
@@ -85,11 +79,11 @@
                     City:
                 </div>
                 <div class="form-group col-lg-4" style="padding-left: 50px">
-                    <input type="text" id="city" class="form-control"
-                           th:field="*{company.city}"/>
+                    <!--<p th:text="${company.city}"></p>-->
                 </div>
                 <!--<p th:if="${#fields.hasErrors('company.city')}" th:errors="*{company.city}"></p>-->
             </div>
+
             <hr class="style1">
             Contact person:
             <hr class="style1">
@@ -99,10 +93,8 @@
                     Recrutiment name:
                 </div>
                 <div class="form-group col-lg-4" style="padding-left: 50px">
-                    <input type="text" id="name" class="form-control"
-                           th:field="*{company.name}"/>
+                    <!--<p th:text="${company.name}"></p>-->
                 </div>
-                <!--<p th:if="${#fields.hasErrors('companyname')}" th:errors="*{name}"></p>-->
             </div>
 
             <div class="row form-group">
@@ -110,8 +102,9 @@
                     Recrutiment surname: :
                 </div>
                 <div class="form-group col-lg-4" style="padding-left: 50px">
-                    <input type="text" id="surname" class="form-control"
-                           th:field="*{company.surname}"/>
+                    <div class="form-group col-lg-4" style="padding-left: 50px">
+                        <!--<p th:text="${company.surname}"></p>-->
+                    </div>
                 </div>
                 <!--<p th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></p>-->
             </div>
@@ -121,8 +114,7 @@
                     Contact email:
                 </div>
                 <div class="form-group col-lg-4" style="padding-left: 50px">
-                    <input type="text" id="email" class="form-control"
-                           th:field="*{company.email}"/>
+                    <!--<p th:text="${company.email}"></p>-->
                 </div>
             </div>
         </div>

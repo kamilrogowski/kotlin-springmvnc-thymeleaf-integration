@@ -9,9 +9,9 @@ import javax.validation.constraints.NotNull
  * Created by Kamil on 9/22/2017.
  */
 @Entity
-class User(
+open class User(
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long = -1,
+        var id: Long = -1,
         @Column(unique = true)
         @NotNull
         var login: String  = "",
@@ -19,10 +19,10 @@ class User(
         var password: String = "",
         @Email
         var email : String = "",
-        val active : Boolean = true,
+        var active : Boolean = true,
         @NotNull
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        val userDetails: UserDetails = UserDetails(),
+        var userDetails: UserDetails = UserDetails(),
 
         @ManyToMany(cascade = arrayOf(CascadeType.ALL))
         @JoinTable(name = "USER_ROLE",
