@@ -35,7 +35,20 @@ class AdvertisementController(private val advertisementRepository: Advertisement
     @PostMapping("/advertisement/add")
     fun add(@ModelAttribute advertisement: Advertisement, bindingResult: BindingResult, redirectAttributes: RedirectAttributes, model:ModelMap): String{
 //        advertisementRepository.save(advertisement)
-        redirectAttributes.addAttribute("advertisement", advertisement)
-        return "redirect:/advertisementDetails"
+        redirectAttributes.addFlashAttribute("advertisement", advertisement)
+        return "redirect:/advertisement/confirm"
+    }
+
+    @GetMapping("/advertisement/confirm")
+    fun confirm(@ModelAttribute("advertisement") advertisement: Advertisement, bindingResult: BindingResult, model: ModelMap): String{
+//        advertisementRepository.save(advertisement)
+        model.addAttribute("advertisement", advertisement)
+        model.addAttribute("advertisement1", advertisement)
+        return "advertisementDetails.html"
+    }
+
+    @PostMapping("/advertisement/confirm")
+    fun confirm(@ModelAttribute advertisement: Advertisement, bindingResult: BindingResult, redirectAttributes: RedirectAttributes, model:ModelMap): String{
+        return "advertisementDetails.html"
     }
 }
