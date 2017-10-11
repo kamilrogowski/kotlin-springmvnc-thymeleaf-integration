@@ -174,5 +174,6 @@ fieldset[disabled] .form-control {
 .voffset9 { margin-top: 150px; }
 
 hr.style1{
-    border-top: 1px solid #8c8b8b;
+    border-top: 1px solid  #004E75;
+    color: #004E75;
 }

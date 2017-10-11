@@ -40,15 +40,26 @@ class AdvertisementController(private val advertisementRepository: Advertisement
     }
 
     @GetMapping("/advertisement/confirm")
-    fun confirm(@ModelAttribute("advertisement") advertisement: Advertisement, bindingResult: BindingResult, model: ModelMap): String{
-//        advertisementRepository.save(advertisement)
-        model.addAttribute("advertisement", advertisement)
-        model.addAttribute("advertisement1", advertisement)
+    fun confirm(@ModelAttribute("advertisement") advertisement: Advertisement, bindingResult: BindingResult, model: ModelMap, rediirect : RedirectAttributes): String{
+//        if (bindingResult.hasErrors()) {
+//            return "advertisement.html"
+//        }
+
+        rediirect.addFlashAttribute("advertisement", advertisement)
+        rediirect.addFlashAttribute("advertisement1", advertisement)
+        advertisementRepository.save(advertisement)
         return "advertisementDetails.html"
     }
 
-    @PostMapping("/advertisement/confirm")
-    fun confirm(@ModelAttribute advertisement: Advertisement, bindingResult: BindingResult, redirectAttributes: RedirectAttributes, model:ModelMap): String{
-        return "advertisementDetails.html"
+    @GetMapping("/advertisments")
+    fun showaAllOffers(model : ModelMap): String{
+        model.addAttribute("advertisments", advertisementRepository.findAll())
+        return "offersList.html"
     }
+
+    @ModelAttribute("advertisments")
+    open fun messages() : List<Advertisement> = advertisementRepository.findAll()
+
+
+
 }

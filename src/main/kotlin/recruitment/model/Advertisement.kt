@@ -14,11 +14,11 @@ open class Advertisement(
 
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = -1,
-        @get:NotEmpty
-        @get:Size(min=4, max=30)
+        @NotEmpty
+        @Size(min=4, max=30)
         var title: String = "",
-        @get:NotEmpty
-        @get:Size(min=50, max=1000)
+        @NotEmpty
+        @Size(min=50, max=1000)
         var description: String = "",
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         var startDate: Date? = Date(),

@@ -54,6 +54,7 @@
                     <input type="date" id="startDate" class="form-control"
                            th:field="*{startDate}"/>
                 </div>
+                <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>
             </div>
 
             <div class="row form-group">
@@ -64,7 +65,7 @@
                     <input type="date" id="endDate" class="form-control"
                            th:field="*{endDate}"/>
                 </div>
-                <!--<p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>-->
+                <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
             </div>
             <hr class="style1">
             Company details:
@@ -77,7 +78,7 @@
                     <input type="text" id="companyName" class="form-control"
                            th:field="*{company.companyName}"/>
                 </div>
-                <!--<p th:if="${#fields.hasErrors('{company.companyName')}" th:errors="*{{company.companyName}"></p>-->
+                <!--<p th:if="${#fields.hasErrors('{companyName')}" th:errors="*{{companyName}"></p>-->
             </div>
 
             <div class="row form-group">
@@ -102,7 +103,7 @@
                     <input type="text" id="name" class="form-control"
                            th:field="*{company.name}"/>
                 </div>
-                <!--<p th:if="${#fields.hasErrors('companyname')}" th:errors="*{name}"></p>-->
+                <!--<p th:if="${#fields.hasErrors('company.name')}" th:errors="*{company.name}"></p>-->
             </div>
 
             <div class="row form-group">
@@ -113,7 +114,7 @@
                     <input type="text" id="surname" class="form-control"
                            th:field="*{company.surname}"/>
                 </div>
-                <!--<p th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></p>-->
+                <!--<p th:if="${#fields.hasErrors('company.surname')}" th:errors="*{company.surname}"></p>-->
             </div>
 
             <div class="row form-group">
@@ -135,12 +136,6 @@
 
 </div>
 
-<!--&lt;!&ndash;/* Fragment widoczny dla zalogowanego użytkownika: */&ndash;&gt;-->
-<!--<div id="page-wrapper" th:if="${#authorization.expression('isAuthenticated()')}">-->
-<!--<div class="col-lg-12 text-center v-center">-->
-<!--<h1 th:text="#{login.already_logged_in}"></h1>-->
-<!--</div>-->
-<!--</div>-->
 
 <div th:replace="navbar :: footer"></div>
 </body>

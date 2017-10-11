@@ -9,17 +9,16 @@ import javax.validation.constraints.Size
 open class Company(
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = -1,
-        @get:NotEmpty
-        @get:Size(min=1, max=150)
+        @NotEmpty
+        @Size(min=1, max=150)
         var companyName: String = "",
-        @get:Size(min=1, max=150)
+        @Size(min=1, max=150)
         var city: String = "",
-        @get:Size(min=1, max=150)
+        @Size(min=1, max=150)
         var email: String = "",
-        @get:Size(min=1, max=150)
+        @Size(min=1, max=150)
         var name: String  = "",
-        @get:Size(min=1, max=150)
+        @Size(min=1, max=150)
         var surname: String = ""
-
 
 )
