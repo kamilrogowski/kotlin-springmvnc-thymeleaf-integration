@@ -3,17 +3,15 @@ package recruitment.web
 import org.springframework.stereotype.Controller
 import org.springframework.ui.ModelMap
 import org.springframework.validation.BindingResult
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import recruitment.model.Advertisement
 import recruitment.repository.AdvertisementRepository
 import javax.validation.Valid
 import java.text.SimpleDateFormat
 import org.springframework.beans.propertyeditors.CustomDateEditor
+import org.springframework.ui.Model
 import org.springframework.web.bind.WebDataBinder
-import org.springframework.web.bind.annotation.InitBinder
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 
@@ -51,14 +49,17 @@ class AdvertisementController(private val advertisementRepository: Advertisement
         return "advertisementDetails.html"
     }
 
-    @GetMapping("/advertisments")
+    @GetMapping("/advertisements")
     fun showaAllOffers(model : ModelMap): String{
         model.addAttribute("advertisments", advertisementRepository.findAll())
         return "offersList.html"
     }
 
-    @ModelAttribute("advertisments")
-    open fun messages() : List<Advertisement> = advertisementRepository.findAll()
+    @GetMapping("/advertisement/details/{id}")
+    fun getAdvertimsent(@PathVariable("id") id : String, model : Model) : String {
+        model.addAttribute("advertisement", advertisementRepository.findById(id.toLong()).get())
+        return "advertisementDetails.html"
+    }
 
 
 

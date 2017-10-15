@@ -3,11 +3,13 @@ package recruitment.web
 import recruitment.model.User
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
 import org.springframework.ui.ModelMap
 import org.springframework.validation.*
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.ModelAttribute
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import recruitment.ErrorsFactory
 import recruitment.ErrorsFactory.Companion.WRONG_CREDENTIALS
@@ -31,6 +33,7 @@ class UserController(
     private val REGISTER_HOME = "register.html"
     private val REDIRECT_REGISTER = "redirect:/join"
     private val REDIRECT_LOGIN = "redirect:/login"
+    private val USERS_LIST = "usersList.html"
 
     @GetMapping("/login")
     fun login(model: ModelMap): String {
@@ -57,6 +60,19 @@ class UserController(
         return REGISTER_HOME
     }
 
+    @GetMapping("/users")
+    fun fetchAllUsers(model: ModelMap): String {
+        model.addAttribute("usersCounter", userRepository.count())
+        model.addAttribute("users", userRepository.findAll())
+        return USERS_LIST
+    }
+
+
+    @GetMapping("/user/details/{id}")
+    fun fetchDetailsOfUser(@PathVariable("id") id : String, model : Model) : String {
+        model.addAttribute("user", userRepository.findById(id.toLong()).get())
+        return "userDetails.html"
+    }
 
     @PostMapping("/join")
     fun join(@ModelAttribute("userForm") @Valid userForm: UserForm, bindingResult: BindingResult, redirectAttributes: RedirectAttributes): String {
