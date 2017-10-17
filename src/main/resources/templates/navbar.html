@@ -10,7 +10,6 @@
 <body>
 <!--/* Pasek nawigacyjny dolaczany na wszystkich stronach */-->
 <div th:fragment="header">
-
     <link rel="icon" th:href="@{/resources/img/favicon.png}" />
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/bootstrap/css/bootstrap.min.css}" />
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}" />
@@ -22,7 +21,7 @@
 
     <!--/* Nagłówek paska z logo firmy: */-->
     <div class="container comarch-header">
-        <a th:href="@{/resource_list.html}"> <img class="logo" th:src="@{/resources/img/comarch_logo.png}" />
+        <a th:href="@{/advertisements}"> <img class="logo" th:src="@{/img/comarch_logo.png}" />
         </a>
     </div>
 
@@ -38,10 +37,36 @@
         <div id="bar" class="collapse navbar-collapse">
             <div class="container">
                 <ul id="active" class="nav navbar-nav">
+                    <li>
+                        <!--/* Link do zarządzania kategoriami - tylko dla admina */--> <a id="nav_cat"
+                                                                                           th:href="@{/advertisements}" th:text="#{navbar.offers}"></a>
+                    </li>
+                    <li>
+                        <!--/* Link do listy zasobów - widoczny dla wszystkich */--> <a id="nav_rlist"
+                                                                                        th:href="@{/advertisement/add}" th:text="#{navbar.advertisement}"></a>
+                    </li>
+
+                    <li>
+                        <!--/* Link do listy użytkowników - tylko dla admina */--> <a id="nav_user"
+                                                                                      th:href="@{/users.html}" th:text="#{navbar.users}"></a>
+                    </li>
+                    <li>
+                        <!--/* Link do listy uwag - tylko dla admina */--> <a id="nav_comments"
+                                                                              th:href="@{/join}" th:text="#{navbar.register}"></a>
+                    </li>
+                    <!--<li>-->
+                        <!--&lt;!&ndash;/* Link do dodawania uwagi - dla wszystkich */&ndash;&gt; <a id="nav_comment" class="clickable"-->
+                                                                                 <!--th:text="#{navbar.add_comment}"-->
+                                                                                 <!--onclick="$('.bg-success').css('display','none'); $('#createCommentModal').modal('show')"></a>-->
+                    <!--</li>-->
                 </ul>
 
                 <!--/* Prawa część navbara - link do profilu użytkownika i przycisk wylogowania */-->
                 <ul class="nav navbar-nav navbar-right">
+                    <!--<li>-->
+                        <!--&lt;!&ndash;/* Tożsamość użytkownika z linkiem do profilu */&ndash;&gt; <a id="nav_ac"-->
+                                                                                   <!--sec:authentication="principal.UserDetails.identity" th:href="@{/view_profile}"></a>-->
+                    <!--</li>-->
                     <!--<li th:if="${#authorization.expression('isAuthenticated()')}">-->
                         <!--&lt;!&ndash;/* Przycisk wylogowania */&ndash;&gt; <a th:href="@{/j_spring_security_logout}"-->
                                                              <!--th:text="#{navbar.logout_button}"> </a>-->
