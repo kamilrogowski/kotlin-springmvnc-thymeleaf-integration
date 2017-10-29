@@ -24,6 +24,14 @@
     }
 </style>
 
+<div class="panel-body">
+    <div class="col-lg-12">
+        <p class="bg-danger" th:if="${error}" th:text="${error}" style="text-align:center;border-style: solid;font-size: 25px;"></p>
+        <p class="bg-success" th:if="${success}" th:text="${success}" style="text-align:center;border-style: solid; font-size: 25px;"></p>
+    </div>
+    <br>
+</div>
+
 <div class="container">
     <label >Total number of users in the system:
         <label th:text="${usersCounter}"></label>
@@ -47,7 +55,7 @@
                     <td th:text="${user.userDetails.name}">1</td>
                     <td th:text="${user.userDetails.surname}">1</td>
                     <td th:text="${user.email}">1</td>
-                    <td th:text="${user.active}">1</td>
+                    <td th:text="${user.active} ? Yes : No" >1</td>
                     <td><a th:href="${'/user/details/' + {user.id}}">Details</a>
                     </td>
             </tr>
@@ -58,8 +66,6 @@
 </body>
 </html>
 <script>
-    function  showDetails(userId) {
-        console.log(userId);
-    }
+
 </script>
 <!--'window.location.href  = "@{'/category/edit/' + ${category.id}}"-->
