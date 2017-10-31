@@ -31,11 +31,11 @@ open class User(
 
         val roles : MutableSet<Role> = mutableSetOf(),
 
-        @ManyToMany(cascade = arrayOf(CascadeType.ALL))
-        @JoinTable(name = "OBSERVED",
-                joinColumns = arrayOf(JoinColumn(name = "USER_ID", updatable = false, nullable = false)),
-                inverseJoinColumns = arrayOf(JoinColumn(name = "ADV_ID",  nullable = false, updatable = false)))
-        var observedOffers : MutableSet<ObservedOffers> = mutableSetOf()
+        @OneToMany(
+                mappedBy = "user",
+                cascade = arrayOf(CascadeType.ALL)
+        )
+         var observeOffers : MutableSet<ObservedOffers> = mutableSetOf()
 
 ) {
         override fun toString(): String {

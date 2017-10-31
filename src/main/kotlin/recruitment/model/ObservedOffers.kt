@@ -1,22 +1,25 @@
 package recruitment.model
 
+import org.springframework.format.annotation.DateTimeFormat
+import java.util.*
 import javax.persistence.*
-import javax.validation.constraints.NotNull
 
 @Entity
 open class ObservedOffers(
 
-        @Id @GeneratedValue(strategy = GenerationType.AUTO)
-        var id: Long = -1,
-        @NotNull
-        @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var advertisement: Advertisement = Advertisement(),
-//        @ManyToMany(mappedBy = "observedOffers")
-//        var advertisements: MutableList<User> = mutableListOf(),
+        @field:EmbeddedId
+        var id : ObserveUserId = ObserveUserId(),
 
-        @OneToOne(cascade = arrayOf(CascadeType.ALL))
+        @field:ManyToOne(fetch = FetchType.LAZY)
+        @field:MapsId("userId")
         var user: User = User(),
 
-        val isObserved: Boolean = false
+        @field:ManyToOne(fetch = FetchType.LAZY)
+        @field:MapsId("advertisementId")
+        var advertisement : Advertisement = Advertisement(),
+
+        val isObserved: Boolean = false,
+        @field:DateTimeFormat(pattern = "yyyy-MM-dd")
+        var dateStart: Date? = Date()
 
 )

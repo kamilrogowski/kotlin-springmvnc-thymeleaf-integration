@@ -19,10 +19,26 @@
 <div class="container-fluid " style="font-size: 16px;padding: 100px">
     <hr class="style1">
 
-    <form method="post" class="form-horizontal" th:attr="action=@{/advertisement/confirm}" th:object="${advertisement}">
-        <div th:replace="advertisementDetailsCommon :: advertisementDetailsCommonFragment"></div>
+    <form method="post" class="form-horizontal" th:action="${'/advertisement/subscribe/' + {advertisement.id}}">
+        <button type="submit" class="btn btn-default btn-lg"  style="float: right;margin-right: 100px;">
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            Subscribe
+        </button>
     </form>
+    <div th:replace="advertisementDetailsCommon :: advertisementDetailsCommonFragment">
+    </div>
+    <div class="col-md-12">
+        <hr class="style1">
+        <div class="row form-group">
+            <div class="form-group col-lg-2">
+                Visit counter:
+            </div>
 
+            <div class="form-group col-lg-4" style="padding-left: 50px">
+                <label th:text="${advertisement.visitCounter}"></label>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--&lt;!&ndash;/* Fragment widoczny dla zalogowanego użytkownika: */&ndash;&gt;-->

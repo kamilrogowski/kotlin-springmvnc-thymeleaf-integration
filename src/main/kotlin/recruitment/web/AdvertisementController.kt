@@ -13,6 +13,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import recruitment.web.wrappers.PageWrapper
 import java.util.*
 
 @Controller
@@ -51,13 +52,15 @@ class AdvertisementController(private val advertisementRepository: Advertisement
     }
 
     @GetMapping("/advertisements")
-    fun showaAllOffers(model: ModelMap, pageable: Pageable): String {
+    fun showAllOffers(model: ModelMap, pageable: Pageable): String {
 
         val jobOffers = mutableListOf<Advertisement>()
-        for (advertisement in advertisementRepository.findAll()) {
+        val pages = PageWrapper<Advertisement>(advertisementRepository.findByIsActiveTrue(pageable), "/advertisements")
+        for (advertisement in pages.content) {
             advertisement.imageConverted = advertisement.toStreamingURI()
             jobOffers.add(advertisement)
         }
+        model.addAttribute("page", pages)
         model.addAttribute("advertisments", jobOffers)
         return "offersList.html"
     }
@@ -68,7 +71,13 @@ class AdvertisementController(private val advertisementRepository: Advertisement
         offerFound.visitCounter++
         advertisementRepository.save(offerFound)
         model.addAttribute("advertisement", offerFound)
-        return "advertisementDetails.html"
+        return "advertisementDetailsList.html"
+    }
+
+
+    @PostMapping("/advertisement/subscribe/{id}")
+    fun subscribeJobOffer(@PathVariable("id") id: String, model: Model): String {
+       throw NotImplementedError("Not implemented yet")
     }
 
 

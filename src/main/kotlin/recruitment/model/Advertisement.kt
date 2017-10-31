@@ -17,26 +17,31 @@ open class Advertisement(
         @field:Id @field:GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = -1,
         @NotEmpty
-        @Size(min=4, max=30)
+        @Size(min = 4, max = 30)
         var title: String = "",
         @NotEmpty
-        @Size(min=50, max=1000)
+        @Size(min = 50, max = 1000)
         var description: String = "",
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        @field:DateTimeFormat(pattern = "yyyy-MM-dd")
         var startDate: Date? = Date(),
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        @field:DateTimeFormat(pattern = "yyyy-MM-dd")
         var endDate: Date? = Date(),
-        @Size(min=4, max=30)
+        @Size(min = 4, max = 30)
         @field:Lob
-        var companyImage : ByteArray = ByteArray(128000000),
+        var companyImage: ByteArray = ByteArray(128000000),
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
         var company: Company = Company(),
         @field:Transient
-        var imageConverted : String = "",
-        var visitCounter : Int = 0
-        ) {
+        var imageConverted: String = "",
+        var visitCounter: Int = 0,
+        var isActive : Boolean  = true,
+        @field:OneToMany(
+                mappedBy = "user",
+                cascade = arrayOf(CascadeType.ALL)
+        )
+        var userObserves: MutableSet<ObservedOffers> = mutableSetOf()) {
 
-    fun toStreamingURI() : String {
+    fun toStreamingURI(): String {
         //We need to encode the byte array into a base64 String for the browser
         val base64 = DatatypeConverter.printBase64Binary(companyImage)
 

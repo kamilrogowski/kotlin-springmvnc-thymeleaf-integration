@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
 <div th:replace="navbar :: header"></div>
@@ -20,19 +20,58 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-sm-4" th:each="ad : ${advertisments}" >
+        <div class="col-sm-4" th:each="ad : ${advertisments}">
             <div class="card" style="width: 20rem;">
                 <a th:href="${'/advertisement/details/' + {ad.id}}">
-                <img th:src="${ad.imageConverted}"  class="card-img-top" style=" width:100%" alt="Image"></div>
-                <div class="card-block">
-                    <h4 class="card-title" th:text="${ad.title}"></h4>
-                    <p class="card-text" th:text="${ad.description}"></p>
-                    <p class="card-text" th:text="${ad.company.companyName}"></p>
-                </div>
+                    <img th:src="${ad.imageConverted}" class="card-img-top" style=" width:100%" alt="Image"></div>
+            <div class="card-block">
+                <h4 class="card-title" th:text="${ad.title}"></h4>
+                <p class="card-text" th:text="${ad.description}"></p>
+                <p class="card-text" th:text="${ad.company.companyName}"></p>
+            </div>
             </a>
+        </div>
+    </div>
+    <div>
+        <!-- Pagination Bar -->
+        <div class="row">
+         <div class="pagination text-center position-bottom-center">
+                <ul class="pagination centered">
+                    <li th:class="${page.firstPage}? 'disabled' : ''">
+                        <span th:if="${page.firstPage}">← First</span>
+                        <a th:if="${not page.firstPage}" th:href="@{${page.url}(page.page=1,page.size=${page.size})}">←
+                            First</a>
+                    </li>
+                    <li th:class="${page.hasPreviousPage}? '' : 'disabled'">
+                        <span th:if="${not page.hasPreviousPage}">«</span>
+                        <a th:if="${page.hasPreviousPage}"
+                           th:href="@{${page.url}(page.page=${page.number-1},page.size=${page.size})}"
+                           title='Go to previous page'>«</a>
+                    </li>
+                    <li th:each="item : ${page.items}">
+                        <span th:if="${item.current}" th:text="${item.number}">1</span>
+                        <a th:if="${not item.current}"
+                           th:href="@{${page.url}(page.page=${item.number},page.size=${page.size})}"><span
+                                th:text='${item.number}'>1</span></a>
+                    </li>
+                    <li th:class="${page.hasNextPage}? '' : 'disabled'">
+                        <span th:if="${not page.hasNextPage}">»</span>
+                        <a th:if="${page.hasNextPage}"
+                           th:href="@{${page.url}(page.page=${page.number+1},page.size=${page.size})}"
+                           title='Go to next page'>»</a>
+                    </li>
+                    <li th:class="${page.lastPage}? 'disabled' : ''">
+                        <span th:if="${page.lastPage}">Last →</span>
+                        <a th:if="${not page.lastPage}"
+                           th:href="@{${page.url}(page.page=${page.totalPages},page.size=${page.size})}">Last →</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
+</div>
+</div>
+
 </div>
 
 </body>
