@@ -31,10 +31,8 @@ class UserController(
         private val userService: IUserService)  {
 
     private val log = LoggerFactory.getLogger(UserController::class.java)
-    private val REGISTER_HOME = "register.html"
     private val REDIRECT_REGISTER = "redirect:/join"
     private val REDIRECT_LOGIN = "redirect:/login"
-    private val USERS_LIST = "usersList.html"
 
     @GetMapping("/login")
     fun login(model: ModelMap): String {
@@ -59,21 +57,6 @@ class UserController(
         }
 
         return "login.html"
-    }
-
-    @GetMapping("/join")
-    fun register(model: ModelMap): String {
-        model.remove("user")
-        model.addAttribute("allRoles", roleRepository.findAll())
-        model.addAttribute("userForm", UserForm())
-        return REGISTER_HOME
-    }
-
-    @GetMapping("/users")
-    fun fetchAllUsers(model: ModelMap): String {
-        model.addAttribute("usersCounter", userRepository.count())
-        model.addAttribute("users", userRepository.findAll())
-        return USERS_LIST
     }
 
 

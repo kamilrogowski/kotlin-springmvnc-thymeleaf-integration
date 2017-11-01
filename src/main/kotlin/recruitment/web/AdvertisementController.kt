@@ -26,11 +26,7 @@ class AdvertisementController(private val advertisementRepository: Advertisement
                 CustomDateEditor(SimpleDateFormat("yyyy-MM-dd"), true, 10))
     }
 
-    @GetMapping("/advertisement/add")
-    fun addAdvertisement(model: ModelMap): String {
-        model.addAttribute("advertisement", Advertisement())
-        return "advertisement.html"
-    }
+
 
     @PostMapping("/advertisement/add")
     fun add(@RequestParam("file") file: MultipartFile, @ModelAttribute advertisement: Advertisement, bindingResult: BindingResult, redirectAttributes: RedirectAttributes, model: ModelMap): String {
@@ -52,20 +48,6 @@ class AdvertisementController(private val advertisementRepository: Advertisement
         return "advertisementDetails.html"
     }
 
-    @GetMapping("/advertisements")
-    fun showAllOffers(model: ModelMap, pageable: Pageable): String {
-
-        val jobOffers = mutableListOf<Advertisement>()
-        val pages = PageWrapper<Advertisement>(advertisementRepository.findByIsActiveTrue(pageable), "/advertisements")
-        for (advertisement in pages.content) {
-            advertisement.imageConverted = advertisement.toStreamingURI()
-            jobOffers.add(advertisement)
-        }
-        model.addAttribute("page", pages)
-        model.addAttribute("advertisments", jobOffers)
-        model.addAttribute("searchFilter", FilterSearchDto())
-        return "offersList.html"
-    }
 
     @GetMapping("/advertisement/details/{id}")
     fun fetchAdvertisementAndUpdateVisitCounter(@PathVariable("id") id: String, model: Model): String {
@@ -109,8 +91,6 @@ class AdvertisementController(private val advertisementRepository: Advertisement
         model.addAttribute("page", pages)
         model.addAttribute("advertisments", jobOffers)
         model.addAttribute("searchFilter", FilterSearchDto())
-
-
         return "offersList.html"
     }
 
