@@ -19,8 +19,22 @@
 
 </div>
 <div class="container">
+    <form method="post" class="form-horizontal" th:attr="action=@{/advertisements/search}" th:object="${searchFilter}" >
+        <div class="row">
+            <div class="col-sm-4">
+                <input type="text" id="title" class="form-control" name="title" placeholder="Job Title" th:maxlength="40"
+                       th:field="*{title}"/>
+            </div>
+            <div class="col-sm-4"><input type="text" id="city" class="form-control" name="city" placeholder="City"
+                                         th:field="*{city}" maxlength="40"/>
+            </div>
+            <div class="col-sm-4"><button class="btn btn-md btn-primary" type="submit" >Search</button></div>
+
+        </div>
+    </form>
+    <div style="margin-top:15px"></div>
     <div class="row">
-        <div class="col-sm-4" th:each="ad : ${advertisments}">
+        <div class="col-sm-4" th:each="ad : ${advertisments}" style="margin-top: 15px;">
             <div class="card" style="width: 20rem;">
                 <a th:href="${'/advertisement/details/' + {ad.id}}">
                     <img th:src="${ad.imageConverted}" class="card-img-top" style=" width:100%" alt="Image"></div>

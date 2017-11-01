@@ -20,7 +20,7 @@ open class Application{
 	private val log = LoggerFactory.getLogger(Application::class.java)
 
 	@Bean
-	fun init(repository: RoleRepository) = CommandLineRunner {
+	open fun init(repository: RoleRepository) = CommandLineRunner {
 			// save a couple of customers
             repository.save(Role("Guest"))
       		repository.save(Role("Recruiter"))

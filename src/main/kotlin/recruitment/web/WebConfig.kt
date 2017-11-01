@@ -14,7 +14,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver
 
 @Configuration
 @ComponentScan(basePackages = arrayOf("recruitment.*"))
-class WebConfig : WebMvcConfigurerAdapter() {
+open class WebConfig : WebMvcConfigurerAdapter() {
 
     override fun addArgumentResolvers(argumentResolvers: MutableList<HandlerMethodArgumentResolver>?) {
         val resolver = PageableHandlerMethodArgumentResolver()

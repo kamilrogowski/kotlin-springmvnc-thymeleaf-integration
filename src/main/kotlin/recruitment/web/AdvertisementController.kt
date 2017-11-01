@@ -13,6 +13,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import recruitment.dto.FilterSearchDto
 import recruitment.web.wrappers.PageWrapper
 import java.util.*
 
@@ -62,6 +63,7 @@ class AdvertisementController(private val advertisementRepository: Advertisement
         }
         model.addAttribute("page", pages)
         model.addAttribute("advertisments", jobOffers)
+        model.addAttribute("searchFilter", FilterSearchDto())
         return "offersList.html"
     }
 
@@ -77,9 +79,40 @@ class AdvertisementController(private val advertisementRepository: Advertisement
 
     @PostMapping("/advertisement/subscribe/{id}")
     fun subscribeJobOffer(@PathVariable("id") id: String, model: Model): String {
-       throw NotImplementedError("Not implemented yet")
+        throw NotImplementedError("Not implemented yet")
     }
 
+    @PostMapping("/advertisements/search")
+    fun search(@ModelAttribute("searchFilter") searchFilter: FilterSearchDto, model: ModelMap, pageable: Pageable): String {
+        val pages: PageWrapper<Advertisement>
+        val searchFilterTitleQuery ="%" + searchFilter.title + "%"
+        val searchFilterCityQuery ="%" + searchFilter.city + "%"
+
+        if (searchFilter.title.isNotEmpty()) {
+            pages = PageWrapper<Advertisement>(advertisementRepository.findByTitleLikeAndIsActiveTrue(searchFilterTitleQuery,
+                    pageable), "/advertisements")
+        } else if (searchFilter.city.isNotEmpty()) {
+            pages = PageWrapper<Advertisement>(advertisementRepository.findByCompany_CityLikeAndIsActiveTrue(
+                    searchFilterCityQuery, pageable), "/advertisements")
+        } else if (searchFilter.city.isNotEmpty() and searchFilter.title.isNotEmpty()) {
+            pages = PageWrapper<Advertisement>(advertisementRepository.findByCompany_CityLikeAndTitleLikeAndIsActiveTrue(
+                    searchFilterCityQuery,searchFilterTitleQuery, pageable), "/advertisements")
+        } else {
+            pages = PageWrapper<Advertisement>(advertisementRepository.findByIsActiveTrue(pageable), "/advertisements")
+        }
+
+        val jobOffers = mutableListOf<Advertisement>()
+        for (advertisement in pages.content) {
+            advertisement.imageConverted = advertisement.toStreamingURI()
+            jobOffers.add(advertisement)
+        }
+        model.addAttribute("page", pages)
+        model.addAttribute("advertisments", jobOffers)
+        model.addAttribute("searchFilter", FilterSearchDto())
+
+
+        return "offersList.html"
+    }
 
 }
 
