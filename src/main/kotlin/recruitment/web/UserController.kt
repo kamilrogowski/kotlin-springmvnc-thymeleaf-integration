@@ -2,6 +2,7 @@ package recruitment.web
 
 import recruitment.model.User
 import org.slf4j.LoggerFactory
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.ModelMap
@@ -46,7 +47,7 @@ class UserController(
         val foundUser = userRepository.findByLoginAndPassword(user.login, user.password)
 
         foundUser?.let {
-            if (!foundUser.active){
+            if (!foundUser.isActive){
                 redirectAttributes.addFlashAttribute("error", ErrorsFactory.ERROR_MESSAGES[USER_BLOCKED])
                 return REDIRECT_LOGIN
             }
@@ -70,7 +71,7 @@ class UserController(
     @PostMapping("/users/availability/{id}")
     fun blockOrActivateUser(@PathVariable("id") id : String, model : Model, redirectAttributes: RedirectAttributes): String {
         val userToBlock = userRepository.findById(id.toLong()).get()
-        userToBlock.active = !userToBlock.active
+        userToBlock.isActive = !userToBlock.isActive
         userRepository.save(userToBlock)
         redirectAttributes.addFlashAttribute("success", "User with login: ${userToBlock.login} has been successfully blocked/activated")
         return "redirect:/users"
@@ -92,13 +93,14 @@ class UserController(
         }
         val user = User()
         user.login = userForm.login
-        user.password = userForm.password.split(",")[0]
+        user.password = BCryptPasswordEncoder().encode(userForm.password.split(",")[0])
         user.email = userForm.email
         user.userDetails.age = userForm.age
         user.userDetails.name = userForm.name
         user.userDetails.surname = userForm.surname
         user.userDetails.phone = userForm.phone
         user.userDetails.gender = userForm.gender
+
         user.roles.add(userForm.role)
         userRepository.save(user)
         redirectAttributes.addFlashAttribute("success", "You have been successfully registered")

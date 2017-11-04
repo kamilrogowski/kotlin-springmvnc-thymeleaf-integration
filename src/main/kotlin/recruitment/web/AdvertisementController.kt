@@ -14,11 +14,17 @@ import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import recruitment.dto.FilterSearchDto
+import recruitment.model.ObservedOffers
+import recruitment.repository.ObservedOffersRepository
+import recruitment.repository.UserRepository
+import recruitment.web.authorization.LoggedUser
 import recruitment.web.wrappers.PageWrapper
 import java.util.*
 
 @Controller
-class AdvertisementController(private val advertisementRepository: AdvertisementRepository) {
+class AdvertisementController(private val advertisementRepository: AdvertisementRepository,
+                              private val observedOffersRepository: ObservedOffersRepository,
+                              private val usersRepository: UserRepository) {
 
     @InitBinder
     fun initBinder(binder: WebDataBinder) {
@@ -61,7 +67,19 @@ class AdvertisementController(private val advertisementRepository: Advertisement
 
     @PostMapping("/advertisement/subscribe/{id}")
     fun subscribeJobOffer(@PathVariable("id") id: String, model: Model): String {
-        throw NotImplementedError("Not implemented yet")
+        val currentlyLoggedUser = LoggedUser.currentlyLoggedUser
+        val userFound = usersRepository.findByLoginAndIsActiveTrue(currentlyLoggedUser.username)
+        val advFound = advertisementRepository.findById(id.toLong()).get()
+
+        val observedOffer = ObservedOffers()
+        observedOffer.advertisement = advFound
+        observedOffer.user = userFound!!
+        userFound.observeOffers.add(observedOffer)
+        advFound.userObserves.add(observedOffer)
+        usersRepository.save(userFound)
+        advertisementRepository.save(advFound)
+        observedOffersRepository.save(observedOffer)
+        return "offersList.html"
     }
 
     @PostMapping("/advertisements/search")

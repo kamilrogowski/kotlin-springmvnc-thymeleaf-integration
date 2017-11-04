@@ -15,6 +15,7 @@ import kotlin.jvm.Transient
 open class Advertisement(
 
         @field:Id @field:GeneratedValue(strategy = GenerationType.AUTO)
+        @field:Column(name="ADVERTISEMENT_ID")
         var id: Long = -1,
         @NotEmpty
         @Size(min = 4, max = 30)
@@ -36,7 +37,7 @@ open class Advertisement(
         var visitCounter: Int = 0,
         var isActive : Boolean  = true,
         @field:OneToMany(
-                mappedBy = "user",
+                mappedBy = "advertisement",
                 cascade = arrayOf(CascadeType.ALL)
         )
         var userObserves: MutableSet<ObservedOffers> = mutableSetOf()) {
@@ -47,6 +48,21 @@ open class Advertisement(
 
         //Now just return a data string. The Browser will know what to do with it
         return "data:img/png;base64,$base64"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Advertisement
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
     }
 }
 

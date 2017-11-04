@@ -61,6 +61,13 @@
                                                                               th:href="@{/about_us}" th:text="#{navbar.join}"></a>
                     </li>
 
+                    <li>
+                        <!--/* Link do listy uwag - tylko dla admina */--> <a id="nav_comments"
+                                                                              th:href="@{/observed_offers}" th:text="#{navbar.observed}"></a>
+                    </li>
+
+
+
                     <!--<li>-->
                         <!--&lt;!&ndash;/* Link do dodawania uwagi - dla wszystkich */&ndash;&gt; <a id="nav_comment" class="clickable"-->
                                                                                  <!--th:text="#{navbar.add_comment}"-->

@@ -15,5 +15,7 @@ interface UserRepository  : JpaRepository<User, Long> {
     fun existsByLogin(username: String): Boolean
     fun existsByLoginAndPassword(login: String, password: String): Boolean
     fun findByLoginAndPassword(login: String, password: String): User?
+    fun findByLoginAndIsActiveTrue(login: String): User?
+    fun findByLogin(login: String): User
 
 }
