@@ -32,14 +32,16 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.authorizeRequests()
-                .antMatchers("/", "/advertisements", "/join", "/css/**", "bootstrap/**", "/bootstrap/css/**").permitAll().anyRequest().authenticated()
+                .antMatchers("/", "/advertisements", "/join", "/css/**", "bootstrap/**", "/bootstrap/css/**", "/h2-console").permitAll().anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/login").
+                defaultSuccessUrl("/advertisements", true)
                 .permitAll()
                 .and()
                 .logout()
                 .permitAll()
+
         http.csrf().disable()
     }
 
@@ -47,7 +49,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     @Autowired
     @Throws(Exception::class)
     fun configureGlobal(auth: AuthenticationManagerBuilder) {
-        auth.userDetailsService(userDetailsServiceBean())
+//        auth.userDetailsService(userDetailsServiceBean())
     }
 
 
@@ -58,8 +60,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.userDetailsService(userDetailsServiceBean())
-        auth.authenticationProvider(authProvider())
+        auth.inMemoryAuthentication().withUser("11").password("11").roles("USER")
+//        auth.userDetailsService(userDetailsServiceBean())
+//        auth.authenticationProvider(authProvider())
     }
 
     @Bean

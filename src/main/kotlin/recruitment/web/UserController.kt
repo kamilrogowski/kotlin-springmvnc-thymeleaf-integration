@@ -101,7 +101,12 @@ class UserController(
         user.userDetails.phone = userForm.phone
         user.userDetails.gender = userForm.gender
 
-        user.roles.add(userForm.role)
+        if(userForm.role.id == "-1".toLong()){
+            user.roles.add(roleRepository.findByRoleName("USER"))
+        }
+        else{
+            user.roles.add(userForm.role)
+        }
         userRepository.save(user)
         redirectAttributes.addFlashAttribute("success", "You have been successfully registered")
         return REDIRECT_REGISTER

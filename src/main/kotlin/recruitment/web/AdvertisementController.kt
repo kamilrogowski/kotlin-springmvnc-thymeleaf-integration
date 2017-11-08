@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile
 import recruitment.dto.FilterSearchDto
 import recruitment.model.ObservedOffers
 import recruitment.repository.ObservedOffersRepository
+import recruitment.repository.RoleRepository
 import recruitment.repository.UserRepository
 import recruitment.web.authorization.LoggedUser
 import recruitment.web.wrappers.PageWrapper
@@ -24,7 +25,8 @@ import java.util.*
 @Controller
 class AdvertisementController(private val advertisementRepository: AdvertisementRepository,
                               private val observedOffersRepository: ObservedOffersRepository,
-                              private val usersRepository: UserRepository) {
+                              private val usersRepository: UserRepository,
+                              private val roleRepository: RoleRepository) {
 
     @InitBinder
     fun initBinder(binder: WebDataBinder) {
@@ -77,7 +79,8 @@ class AdvertisementController(private val advertisementRepository: Advertisement
         userFound.observeOffers.add(observedOffer)
         advFound.userObserves.add(observedOffer)
         usersRepository.save(userFound)
-        advertisementRepository.save(advFound)
+
+//        advertisementRepository.save(advFound)
         observedOffersRepository.save(observedOffer)
         return "offersList.html"
     }
@@ -88,17 +91,14 @@ class AdvertisementController(private val advertisementRepository: Advertisement
         val searchFilterTitleQuery ="%" + searchFilter.title + "%"
         val searchFilterCityQuery ="%" + searchFilter.city + "%"
 
-        if (searchFilter.title.isNotEmpty()) {
-            pages = PageWrapper<Advertisement>(advertisementRepository.findByTitleLikeAndIsActiveTrue(searchFilterTitleQuery,
+        pages = when {
+            searchFilter.title.isNotEmpty() -> PageWrapper<Advertisement>(advertisementRepository.findByTitleLikeAndIsActiveTrue(searchFilterTitleQuery,
                     pageable), "/advertisements")
-        } else if (searchFilter.city.isNotEmpty()) {
-            pages = PageWrapper<Advertisement>(advertisementRepository.findByCompany_CityLikeAndIsActiveTrue(
+            searchFilter.city.isNotEmpty() -> PageWrapper<Advertisement>(advertisementRepository.findByCompany_CityLikeAndIsActiveTrue(
                     searchFilterCityQuery, pageable), "/advertisements")
-        } else if (searchFilter.city.isNotEmpty() and searchFilter.title.isNotEmpty()) {
-            pages = PageWrapper<Advertisement>(advertisementRepository.findByCompany_CityLikeAndTitleLikeAndIsActiveTrue(
+            searchFilter.city.isNotEmpty() and searchFilter.title.isNotEmpty() -> PageWrapper<Advertisement>(advertisementRepository.findByCompany_CityLikeAndTitleLikeAndIsActiveTrue(
                     searchFilterCityQuery,searchFilterTitleQuery, pageable), "/advertisements")
-        } else {
-            pages = PageWrapper<Advertisement>(advertisementRepository.findByIsActiveTrue(pageable), "/advertisements")
+            else -> PageWrapper<Advertisement>(advertisementRepository.findByIsActiveTrue(pageable), "/advertisements")
         }
 
         val jobOffers = mutableListOf<Advertisement>()

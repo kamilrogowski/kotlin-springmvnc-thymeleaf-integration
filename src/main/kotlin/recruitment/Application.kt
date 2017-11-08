@@ -23,9 +23,9 @@ open class Application{
 	@Bean
 	open fun init(repository: RoleRepository) = CommandLineRunner {
 			// save a couple of customers
-            repository.save(Role("Guest"))
-      		repository.save(Role("Recruiter"))
-       		repository.save(Role("Manager"))
+            repository.save(Role("USER"))
+      		repository.save(Role("RECRUITER"))
+       		repository.save(Role("ADMIN"))
 //			repository.save(Customer("Jack", "Bauer"))
 //			repository.save(Customer("Chloe", "O'Brian"))
 //			repository.save(Customer("Kim", "Bauer"))

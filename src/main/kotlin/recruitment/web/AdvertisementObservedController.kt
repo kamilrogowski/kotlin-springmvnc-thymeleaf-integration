@@ -32,8 +32,6 @@ class AdvertisementObservedController(private val usersRepository: UserRepositor
 
     @GetMapping("/observed_offers")
     fun fetchUserObservedOffers(model: ModelMap): String {
-
-
         model.addAttribute("advertisements", usersRepository.findByLogin(
                 LoggedUser.currentlyLoggedUser.username)
                 .observeOffers

@@ -10,5 +10,8 @@ import recruitment.model.User
  * Created by pcrogowski on 2017-09-29.
  */
 @Repository
-interface RoleRepository  : JpaRepository<Role, Long>
+interface RoleRepository  : JpaRepository<Role, Long>{
+
+    fun findByRoleName(role: String): Role
+}
 
