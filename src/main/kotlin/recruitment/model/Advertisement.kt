@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 import javax.persistence.*
+import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 import javax.xml.bind.DatatypeConverter
 import kotlin.jvm.Transient
@@ -35,12 +36,20 @@ open class Advertisement(
         @field:Transient
         var imageConverted: String = "",
         var visitCounter: Int = 0,
+        @NotNull
+        @OneToOne(cascade = arrayOf(CascadeType.ALL))
+        var userOwner: User = User(),
         var isActive : Boolean  = true,
         @field:OneToMany(
                 mappedBy = "advertisement",
                 cascade = arrayOf(CascadeType.ALL)
         )
-        var userObserves: MutableSet<ObservedOffers> = mutableSetOf()) {
+        var userObserves: MutableSet<ObservedOffers> = mutableSetOf(),
+        @field:OneToMany(
+                mappedBy = "advertisement",
+                cascade = arrayOf(CascadeType.ALL)
+        )
+        var usersApplied: MutableSet<Application> = mutableSetOf()){
 
     fun toStreamingURI(): String {
         //We need to encode the byte array into a base64 String for the browser

@@ -10,6 +10,7 @@ import recruitment.model.Advertisement
 import recruitment.repository.AdvertisementRepository
 import recruitment.repository.RoleRepository
 import recruitment.repository.UserRepository
+import recruitment.web.authorization.LoggedUser
 import recruitment.web.wrappers.PageWrapper
 
 /**
@@ -65,6 +66,15 @@ class NavigationController(private val userRepository: UserRepository,
         model.addAttribute("userForm", UserForm())
         return REGISTER_HOME
     }
+
+
+    @GetMapping("/my_advertisements")
+    fun myAdvertisements(model: ModelMap): String {
+        val user = userRepository.findByLogin(LoggedUser.currentlyLoggedUser.username)
+        model.addAttribute("advertisements", advertisementRepository.findByUserOwner_id(user.id))
+        return "my_advertisements.html"
+    }
+
 
 
 

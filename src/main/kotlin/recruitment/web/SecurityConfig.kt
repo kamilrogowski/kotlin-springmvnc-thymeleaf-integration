@@ -49,7 +49,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     @Autowired
     @Throws(Exception::class)
     fun configureGlobal(auth: AuthenticationManagerBuilder) {
-//        auth.userDetailsService(userDetailsServiceBean())
+        auth.userDetailsService(userDetailsServiceBean())
     }
 
 
@@ -60,9 +60,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.inMemoryAuthentication().withUser("11").password("11").roles("USER")
-//        auth.userDetailsService(userDetailsServiceBean())
-//        auth.authenticationProvider(authProvider())
+//        auth.inMemoryAuthentication().withUser("11").password("11").roles("USER")
+        auth.userDetailsService(userDetailsServiceBean())
+        auth.authenticationProvider(authProvider())
     }
 
     @Bean

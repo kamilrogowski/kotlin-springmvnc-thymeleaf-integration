@@ -33,7 +33,13 @@ open class User(
         @field:OneToMany(fetch = FetchType.EAGER,
                 mappedBy = "user",
                 cascade = arrayOf(CascadeType.ALL))
-        var observeOffers: MutableSet<ObservedOffers> = mutableSetOf()
+        var observeOffers: MutableSet<ObservedOffers> = mutableSetOf(),
+
+        @field:OneToMany(fetch = FetchType.EAGER,
+                mappedBy = "user",
+                cascade = arrayOf(CascadeType.ALL))
+        var applicatons: MutableSet<Application> = mutableSetOf()
+
 
 ) {
     override fun toString(): String {

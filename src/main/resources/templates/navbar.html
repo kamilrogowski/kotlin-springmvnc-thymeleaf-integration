@@ -65,8 +65,10 @@
                         <!--/* Link do listy uwag - tylko dla admina */--> <a id="nav_comments"
                                                                               th:href="@{/observed_offers}" th:text="#{navbar.observed}"></a>
                     </li>
-
-
+                    <li>
+                        <!--/* Link do listy uwag - tylko dla admina */--> <a id="nav_comments"
+                                                                              th:href="@{/my_advertisements}" th:text="#{navbar.my_adc}"></a>
+                    </li>
 
                     <!--<li>-->
                         <!--&lt;!&ndash;/* Link do dodawania uwagi - dla wszystkich */&ndash;&gt; <a id="nav_comment" class="clickable"-->
@@ -77,12 +79,12 @@
 
                 <!--/* Prawa część navbara - link do profilu użytkownika i przycisk wylogowania */-->
                 <ul class="nav navbar-nav navbar-right">
-                    <!--<li>-->
-                        <!--&lt;!&ndash;/* Tożsamość użytkownika z linkiem do profilu */&ndash;&gt; <a id="nav_ac"-->
-                                                                                   <!--sec:authentication="principal.UserDetails.identity" th:href="@{/view_profile}"></a>-->
-                    <!--</li>-->
+                    <li>
+                        <!--/* Tożsamość użytkownika z linkiem do profilu */--> <a id="nav_ac"
+                                                                                   sec:authentication="principal.username" th:href="@{/view_profile}"></a>
+                    </li>
                     <!--<li th:if="${#authorization.expression('isAuthenticated()')}">-->
-                        <!--&lt;!&ndash;/* Przycisk wylogowania */&ndash;&gt; <a th:href="@{/j_spring_security_logout}"-->
+                        <!--&lt;!&ndash;/* Przycisk wylogowania */&ndash;&gt; <a th:href="@{/logout}"-->
                                                              <!--th:text="#{navbar.logout_button}"> </a>-->
                     <!--</li>-->
                 </ul>

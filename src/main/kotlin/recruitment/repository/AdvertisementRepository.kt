@@ -17,5 +17,7 @@ interface AdvertisementRepository : JpaRepository<Advertisement, Long> {
     fun findByTitleLikeAndIsActiveTrue(title: String, pageable: Pageable): Page<Advertisement>
     fun findByCompany_CityLikeAndIsActiveTrue(company: String, pageable: Pageable): Page<Advertisement>
     fun findByCompany_CityLikeAndTitleLikeAndIsActiveTrue(company: String, title: String, pageable: Pageable): Page<Advertisement>
+
+    fun findByUserOwner_id(userId : Long): Iterable<Advertisement>
 }
 
