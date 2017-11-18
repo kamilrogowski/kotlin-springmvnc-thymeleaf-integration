@@ -20,6 +20,12 @@ import recruitment.repository.*
 import recruitment.web.authorization.LoggedUser
 import recruitment.web.wrappers.PageWrapper
 import java.util.*
+import com.sun.xml.internal.ws.streaming.XMLStreamWriterUtil.getOutputStream
+import org.apache.catalina.manager.StatusTransformer.setContentType
+import javax.servlet.http.HttpServletResponse
+import org.springframework.web.bind.annotation.GetMapping
+import java.io.*
+
 
 @Controller
 class AdvertisementController(private val advertisementRepository: AdvertisementRepository,
@@ -99,7 +105,7 @@ class AdvertisementController(private val advertisementRepository: Advertisement
         val application = Application()
         application.advertisement = adv
         application.user = user!!
-        var attachement = Attachment()
+        val attachement = Attachment()
         attachement.userAttachment = file.bytes
         attachement.contentType = file.contentType
         attachement.name = file.originalFilename
