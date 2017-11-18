@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import recruitment.dto.FilterSearchDto
 import recruitment.model.Application
+import recruitment.model.Attachment
 import recruitment.model.ObservedOffers
 import recruitment.repository.*
 import recruitment.web.authorization.LoggedUser
@@ -64,16 +65,18 @@ class AdvertisementController(private val advertisementRepository: Advertisement
         return "advertisementDetailsList.html"
     }
 
-    @GetMapping("/advertisement/subscribe/details{id}")
+    @GetMapping("/advertisement/subscribe/details/{id}")
     fun showDetailsOfJobOffer(@PathVariable("id") id: String, model: Model): String {
-        model.addAttribute("subscribeAllowed", false)
+        model.addAttribute("advertisement", false)
+        val advertisement = advertisementRepository.findById(id.toLong()).get()
+        model.addAttribute("advertisement", advertisement)
         return "advertisementDetails.html"
     }
 
     @PostMapping("/advertisement/subscribe/{id}")
     fun subscribeJobOffer(@PathVariable("id") id: String, model: Model, redirectAttributes: RedirectAttributes): String {
         val currentlyLoggedUser = LoggedUser.currentlyLoggedUser
-        val userFound = usersRepository.findByLoginAndIsActiveTrue(currentlyLoggedUser.username)
+        val userFound = usersRepository.findByLogin(currentlyLoggedUser.username)
         val advFound = advertisementRepository.findById(id.toLong()).get()
 
         val observedOffer = ObservedOffers()
@@ -89,16 +92,23 @@ class AdvertisementController(private val advertisementRepository: Advertisement
     }
 
     @PostMapping("/advertisement/apply/{id}")
-    fun applyFoAndJob(@PathVariable("id") id: String, model: Model, redirectAttributes: RedirectAttributes) : String {
+    fun applyFoAndJob(@RequestParam("file") file: MultipartFile, @PathVariable("id") id: String, model: Model, redirectAttributes: RedirectAttributes) : String {
         val currentlyLoggedUser = LoggedUser.currentlyLoggedUser
         val user = usersRepository.findByLoginAndIsActiveTrue(currentlyLoggedUser.username)
         val adv = advertisementRepository.findById(id.toLong()).get()
         val application = Application()
         application.advertisement = adv
         application.user = user!!
+        var attachement = Attachment()
+        attachement.userAttachment = file.bytes
+        attachement.contentType = file.contentType
+        attachement.name = file.originalFilename
+        application.attachment = attachement
+
         adv.usersApplied.add(application)
         user.applicatons.add(application)
         applicationRepository.save(application)
+
         redirectAttributes.addFlashAttribute("success", "Operation completed")
         return "redirect:/advertisements"
     }
@@ -133,12 +143,15 @@ class AdvertisementController(private val advertisementRepository: Advertisement
 
 
     @GetMapping("/my_advertisements/{id}")
-    fun fetchMyAdvertisements(@PathVariable("id") id: String, model: Model): String {
+    fun fetchMyAdvertisements(@PathVariable("id") id: String, model: Model, redirectAttributes: RedirectAttributes): String {
         val application = applicationRepository.findByAdvertisement_id(id.toLong())
         application?.let {
             model.addAttribute("advertisement",  application.advertisement.usersApplied.map {
                 it.user }
             )
+        } ?: run{
+            redirectAttributes.addFlashAttribute("error","No one has applied for this offer yet")
+            return "redirect:/my_advertisements"
         }
         return "users_applied.html"
     }

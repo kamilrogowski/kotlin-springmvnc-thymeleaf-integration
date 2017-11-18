@@ -20,5 +20,8 @@ open class Application(
         var advertisement : Advertisement = Advertisement(),
 
         @field:DateTimeFormat(pattern = "yyyy-MM-dd")
-        var applyDate: Date? = Date()
+        var applyDate: Date? = Date(),
+        @field:OneToOne(cascade = arrayOf(CascadeType.ALL))
+        var attachment: Attachment = Attachment()
+
 )  : Serializable {constructor() : this(0)}

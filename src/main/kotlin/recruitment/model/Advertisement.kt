@@ -39,17 +39,22 @@ open class Advertisement(
         @NotNull
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
         var userOwner: User = User(),
+
         var isActive : Boolean  = true,
+
         @field:OneToMany(
                 mappedBy = "advertisement",
                 cascade = arrayOf(CascadeType.ALL)
         )
+
         var userObserves: MutableSet<ObservedOffers> = mutableSetOf(),
+
         @field:OneToMany(
                 mappedBy = "advertisement",
                 cascade = arrayOf(CascadeType.ALL)
         )
         var usersApplied: MutableSet<Application> = mutableSetOf()){
+
 
     fun toStreamingURI(): String {
         //We need to encode the byte array into a base64 String for the browser
