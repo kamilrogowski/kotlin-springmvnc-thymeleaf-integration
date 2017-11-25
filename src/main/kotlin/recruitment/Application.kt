@@ -23,16 +23,9 @@ open class Application{
 	@Bean
 	open fun init(repository: RoleRepository) = CommandLineRunner {
 			// save a couple of customers
-            repository.save(Role("USER"))
-      		repository.save(Role("RECRUITER"))
-       		repository.save(Role("ADMIN"))
-//			repository.save(Customer("Jack", "Bauer"))
-//			repository.save(Customer("Chloe", "O'Brian"))
-//			repository.save(Customer("Kim", "Bauer"))
-//			repository.save(Customer("David", "Palmer"))
-//			repository.save(Customer("Michelle", "Dessler"))
-//
-//			// fetch all customers
+            repository.save(Role("ROLE_USER"))
+      		repository.save(Role("ROLE_RECRUITER"))
+       		repository.save(Role("ROLE_ADMIN"))
 //			log.info("Customers found with findAll():")
 //			log.info("-------------------------------")
             repository.findAll().forEach { role -> log.info(role.roleName) }

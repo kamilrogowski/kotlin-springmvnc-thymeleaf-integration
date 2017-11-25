@@ -13,6 +13,6 @@ interface ApplicationRepository : JpaRepository<Application, Long> {
 
     fun findByAdvertisement_id(id: Long?): Application?
 
-    fun findByAdvertisement(id: Long?): Application?
+    fun findByAdvertisement_idAndUser_id(id1: Long?, id2: Long?): Application?
 
 }

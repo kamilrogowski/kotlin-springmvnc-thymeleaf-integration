@@ -25,6 +25,15 @@ import org.apache.catalina.manager.StatusTransformer.setContentType
 import javax.servlet.http.HttpServletResponse
 import org.springframework.web.bind.annotation.GetMapping
 import java.io.*
+import org.springframework.core.io.FileSystemResource
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.http.MediaType.APPLICATION_PDF
+import java.io.IOException
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestMapping
 
 
 @Controller
@@ -98,7 +107,7 @@ class AdvertisementController(private val advertisementRepository: Advertisement
     }
 
     @PostMapping("/advertisement/apply/{id}")
-    fun applyFoAndJob(@RequestParam("file") file: MultipartFile, @PathVariable("id") id: String, model: Model, redirectAttributes: RedirectAttributes) : String {
+    fun applyFoAndJob(@RequestParam("file") file: MultipartFile, @PathVariable("id") id: String, model: Model, redirectAttributes: RedirectAttributes): String {
         val currentlyLoggedUser = LoggedUser.currentlyLoggedUser
         val user = usersRepository.findByLoginAndIsActiveTrue(currentlyLoggedUser.username)
         val adv = advertisementRepository.findById(id.toLong()).get()
@@ -152,17 +161,34 @@ class AdvertisementController(private val advertisementRepository: Advertisement
     fun fetchMyAdvertisements(@PathVariable("id") id: String, model: Model, redirectAttributes: RedirectAttributes): String {
         val application = applicationRepository.findByAdvertisement_id(id.toLong())
         application?.let {
-            model.addAttribute("advertisement",  application.advertisement.usersApplied.map {
-                it.user }
-            )
-        } ?: run{
-            redirectAttributes.addFlashAttribute("error","No one has applied for this offer yet")
+            model.addAttribute("advertisement", application.advertisement.usersApplied.map {
+                it.user})
+            model.addAttribute("advID", id.toLong())
+        } ?: run {
+            redirectAttributes.addFlashAttribute("error", "No one has applied for this offer yet")
             return "redirect:/my_advertisements"
         }
         return "users_applied.html"
     }
 
+    @GetMapping("/my_advertisements/cv/{userID}/{advId}")
+    fun downloadCVFile(@PathVariable("userID") userID: String,@PathVariable("advId") advId: String, model: Model, redirectAttributes: RedirectAttributes): HttpEntity<ByteArray> {
+        val document = applicationRepository.findByAdvertisement_idAndUser_id(advId.toLong(),userID.toLong())
+        document?.let {
+            val header = HttpHeaders()
+            header.contentType = MediaType.APPLICATION_PDF
+            header.set(HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment; filename=" + document.attachment.name)
 
+            header.contentLength =  document.attachment.userAttachment.size.toLong()
+
+            return HttpEntity(document.attachment.userAttachment, header)
+        }
+
+        return HttpEntity(document!!.attachment.userAttachment)
+
+//        return "users_applied.html"
+    }
 
 
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.springframework.org/security/tags"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <link rel="icon" th:href="@{/resources/favicon.png}" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -41,12 +42,12 @@
                         <!--/* Link do zarządzania kategoriami - tylko dla admina */--> <a id="nav_cat"
                                                                                            th:href="@{/advertisements}" th:text="#{navbar.offers}"></a>
                     </li>
-                    <li>
+                    <li th:if="${#request.isUserInRole('ROLE_RECRUITER')}">
                         <!--/* Link do listy zasobów - widoczny dla wszystkich */--> <a id="nav_rlist"
                                                                                         th:href="@{/advertisement/add}" th:text="#{navbar.advertisement}"></a>
                     </li>
 
-                    <li>
+                    <li th:if="${#request.isUserInRole('ROLE_ADMIN')}">
                         <!--/* Link do listy użytkowników - tylko dla admina */--> <a id="nav_user"
                                                                                       th:href="@{/users.html}" th:text="#{navbar.users}"></a>
                     </li>
@@ -56,11 +57,11 @@
                     </li>
                     </li>
 
-                    <li>
+                    <li th:if="${#request.isUserInRole('ROLE_USER')}">
                         <!--/* Link do listy uwag - tylko dla admina */--> <a id="nav_comments"
                                                                               th:href="@{/observed_offers}" th:text="#{navbar.observed}"></a>
                     </li>
-                    <li>
+                    <li th:if="${#request.isUserInRole('ROLE_RECRUITER')}">
                         <!--/* Link do listy uwag - tylko dla admina */--> <a id="nav_comments"
                                                                               th:href="@{/my_advertisements}" th:text="#{navbar.my_adc}"></a>
                     </li>

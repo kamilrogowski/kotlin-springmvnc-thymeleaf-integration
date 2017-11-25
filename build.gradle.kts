@@ -52,6 +52,7 @@ dependencies {
 	compile("org.jetbrains.kotlin:kotlin-reflect")
 	compile("com.fasterxml.jackson.module:jackson-module-kotlin")
 	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile ("org.thymeleaf.extras:thymeleaf-extras-springsecurity4")
 	compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.boot:spring-boot-starter-security")
 	testCompile("org.springframework.boot:spring-boot-starter-test")
