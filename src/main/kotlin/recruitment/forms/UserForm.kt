@@ -30,7 +30,7 @@ data class UserForm(
         @get:Size(min=6, max=30)
         val surname: String = "",
         val age : Int = 0,
-        val gender : Char = ' ',
+        val gender : Char = 'M',
         val phone: String = "",
         val role: Role = Role())
 

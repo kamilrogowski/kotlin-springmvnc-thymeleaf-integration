@@ -9,9 +9,14 @@ import javax.persistence.*
 
 @Entity
 open class Role(
-        val roleName: String = "",
+
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = -1,
+
         @ManyToMany(mappedBy = "roles")
-        var students: MutableList<User> = mutableListOf()
+        var students: MutableList<User> = mutableListOf(),
+
+        var role: String = "",
+
+        var roleName: String = ""
 )

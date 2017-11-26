@@ -32,7 +32,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.authorizeRequests()
-                .antMatchers("/", "/advertisements", "/join", "/css/**", "bootstrap/**", "/bootstrap/css/**", "/h2-console").permitAll().anyRequest().authenticated()
+                .antMatchers("/", "/advertisements", "/join", "/css/**", "bootstrap/**", "/bootstrap/css/**", "/h2-console").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").
@@ -40,6 +41,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 .permitAll()
                 .and()
                 .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
                 .permitAll()
 
         http.csrf().disable()

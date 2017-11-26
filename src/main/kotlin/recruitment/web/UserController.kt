@@ -34,6 +34,7 @@ class UserController(
     private val log = LoggerFactory.getLogger(UserController::class.java)
     private val REDIRECT_REGISTER = "redirect:/join"
     private val REDIRECT_LOGIN = "redirect:/login"
+    private val REGISTER_HOME = "register.html"
 
     @GetMapping("/login")
     fun login(model: ModelMap): String {

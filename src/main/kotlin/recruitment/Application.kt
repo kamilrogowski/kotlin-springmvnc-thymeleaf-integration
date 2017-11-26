@@ -16,40 +16,31 @@ import recruitment.repository.RoleRepository
 @SpringBootApplication
 @EnableScheduling
 @EnableAsync
-open class Application{
+open class Application {
 
-	private val log = LoggerFactory.getLogger(Application::class.java)
+    private val log = LoggerFactory.getLogger(Application::class.java)
 
-	@Bean
-	open fun init(repository: RoleRepository) = CommandLineRunner {
-			// save a couple of customers
-            repository.save(Role("ROLE_USER"))
-      		repository.save(Role("ROLE_RECRUITER"))
-       		repository.save(Role("ROLE_ADMIN"))
-//			log.info("Customers found with findAll():")
-//			log.info("-------------------------------")
-            repository.findAll().forEach { role -> log.info(role.roleName) }
-//			log.info("")
-//
-//			// fetch an individual customer by ID
-//			val customer = repository.findById(1L)
-//			customer.ifPresent {
-//				log.info("Customer found with findOne(1L):")
-//				log.info("--------------------------------")
-//				log.info(it.toString())
-//				log.info("")
-//			}
-//
-//			// fetch customers by last name
-//			log.info("Customer found with findByLastName('Bauer'):")
-//			log.info("--------------------------------------------")
-//			for (bauer in repository.findByLastName("Bauer")) {
-//				log.info(bauer.toString())
-//			}
-	}
+    @Bean
+    open fun init(repository: RoleRepository) = CommandLineRunner {
+        // save a couple of customers
+        val role: Role = Role()
+        role.roleName = "USER"
+        role.role = "ROLE_USER"
 
+        val role2 = Role()
+        role2.roleName = "RECRUITER"
+        role2.role = "ROLE_RECRUITER"
+
+        val role3 = Role()
+        role3.role = "ROLE_ADMIN"
+        role3.roleName = "ADMIN"
+        repository.save(role)
+        repository.save(role2)
+        repository.save(role3)
+        repository.findAll().forEach { role -> log.info(role.roleName) }
+    }
 }
 
 fun main(args: Array<String>) {
-	SpringApplication.run(Application::class.java, *args)
+    SpringApplication.run(Application::class.java, *args)
 }

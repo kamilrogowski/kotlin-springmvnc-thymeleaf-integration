@@ -22,8 +22,6 @@
 
     <!--/* Nagłówek paska z logo firmy: */-->
     <div class="container comarch-header">
-        <a th:href="@{/advertisements}"> <img class="logo" th:src="@{/img/comarch_logo.png}" />
-        </a>
     </div>
 
     <!--/* Przycisk "hamburger" widoczny przy widoku mobilnym */-->
@@ -51,10 +49,6 @@
                         <!--/* Link do listy użytkowników - tylko dla admina */--> <a id="nav_user"
                                                                                       th:href="@{/users.html}" th:text="#{navbar.users}"></a>
                     </li>
-                    <li>
-                        <!--/* Link do listy uwag - tylko dla admina */--> <a id="nav_comments"
-                                                                              th:href="@{/join}" th:text="#{navbar.register}"></a>
-                    </li>
                     </li>
 
                     <li th:if="${#request.isUserInRole('ROLE_USER')}">
@@ -65,22 +59,31 @@
                         <!--/* Link do listy uwag - tylko dla admina */--> <a id="nav_comments"
                                                                               th:href="@{/my_advertisements}" th:text="#{navbar.my_adc}"></a>
                     </li>
-                    <li>
-                        <!--/* Link do listy uwag - tylko dla admina */--> <a id="nav_comments"
-                                                                              th:href="@{/about_us}" th:text="#{navbar.join}"></a>
-                    </li>
+                    <!--<li>-->
+                        <!--&lt;!&ndash;/* Link do listy uwag - tylko dla admina */&ndash;&gt; <a id="nav_comments"-->
+                                                                              <!--th:href="@{/about_us}" th:text="#{navbar.join}"></a>-->
+                    <!--</li>-->
+
                 </ul>
 
                 <!--/* Prawa część navbara - link do profilu użytkownika i przycisk wylogowania */-->
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
+                    <li th:if="${#request.userPrincipal == null}">
                         <!--/* Tożsamość użytkownika z linkiem do profilu */--> <a id="nav_ac"
-                                                                                   sec:authentication="principal.username" th:href="@{/view_profile}"></a>
+                                                                                   th:href="@{/login}" th:text="#{navbar.login}"></a>
                     </li>
-                    <!--<li th:if="${#authorization.expression('isAuthenticated()')}">-->
-                        <!--&lt;!&ndash;/* Przycisk wylogowania */&ndash;&gt; <a th:href="@{/logout}"-->
-                                                             <!--th:text="#{navbar.logout_button}"> </a>-->
-                    <!--</li>-->
+                    <li th:if="${#request.userPrincipal == null}">
+                        <!--/* Link do listy uwag - tylko dla admina */--> <a id="nav_comments"
+                                                                              th:href="@{/join}" th:text="#{navbar.register}"></a>
+                    </li>
+                    <li th:if="${#request.userPrincipal != null}">
+                        <!--/* Przycisk wylogowania */--> <a
+                                                             th:text="${#request.userPrincipal.getName()}"> </a>
+                    </li>
+                    <li th:if="${#request.userPrincipal != null}">
+                        <!--/* Przycisk wylogowania */-->
+                        <a th:href="@{/logout}">Logout</a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -48,13 +48,13 @@
                     <td th:text="${item.company.companyName}">1</td>
                     <td th:text="${item.company.city}">1</td>
                     <td>
-                        <a th:href="${'/advertisement/subscribe/details/' + {item.id}}">Show attachments</a>
+                        <a th:href="${'/advertisement/subscribe/details/' + {item.id}}">Show offer</a>
                     </td>
             </tr>
         </tbody>
     </table>
 </div>
-
+<div th:replace="navbar :: footer"></div>
 </body>
 </html>
 <script>

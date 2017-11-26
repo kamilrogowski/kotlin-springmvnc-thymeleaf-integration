@@ -52,7 +52,9 @@ class AdvertisementController(private val advertisementRepository: Advertisement
 
     @PostMapping("/advertisement/add")
     fun add(@RequestParam("file") file: MultipartFile, @ModelAttribute advertisement: Advertisement, bindingResult: BindingResult, redirectAttributes: RedirectAttributes, model: ModelMap): String {
-//        advertisementRepository.save(advertisement)
+        if (bindingResult.hasErrors()) {
+            return "advertisement.html"
+        }
         advertisement.companyImage = file.bytes
         redirectAttributes.addFlashAttribute("advertisement", advertisement)
         return "redirect:/advertisement/confirm"
@@ -60,9 +62,7 @@ class AdvertisementController(private val advertisementRepository: Advertisement
 
     @GetMapping("/advertisement/confirm")
     fun confirm(@ModelAttribute("advertisement") advertisement: Advertisement, bindingResult: BindingResult, model: ModelMap, rediirect: RedirectAttributes): String {
-//        if (bindingResult.hasErrors()) {
-//            return "advertisement.html"
-//        }
+
         advertisement.userOwner = usersRepository.findByLogin(LoggedUser.currentlyLoggedUser.username)
         rediirect.addFlashAttribute("advertisement", advertisement)
         rediirect.addFlashAttribute("advertisement1", advertisement)
@@ -99,8 +99,6 @@ class AdvertisementController(private val advertisementRepository: Advertisement
         observedOffer.user = userFound!!
         userFound.observeOffers.add(observedOffer)
         advFound.userObserves.add(observedOffer)
-//        usersRepository.save(userFound)
-//        advertisementRepository.save(advFound)
         observedOffersRepository.save(observedOffer)
         redirectAttributes.addFlashAttribute("success", "Job offer has been added to observed")
         return "redirect:/advertisements"
