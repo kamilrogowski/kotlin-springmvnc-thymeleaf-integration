@@ -27,11 +27,9 @@ class SSUserDetailsService(private val userRepository: UserRepository) : UserDet
     }
 
     private fun getAuthorities(user : User): Set<GrantedAuthority> {
-        val authorities = HashSet<GrantedAuthority>()
-        for (role in user.roles) {
-            val grantedAuthority = SimpleGrantedAuthority(role.role)
-            authorities.add(grantedAuthority)
-        }
+        val authorities = user.roles
+                .map { SimpleGrantedAuthority(it.role) }
+                .toSet()
         return authorities
     }
 
